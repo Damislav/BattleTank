@@ -8,22 +8,22 @@
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
 {
+	 
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
-	// Protect pointer
-	if (!BarrelToSet)return;
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 {
-	// Protect pointer
-	if (!TurretToSet)return;
+	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
 }
+
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
@@ -42,15 +42,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		0,
 		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace // Paramater must be present to prevent bug
-	 
-		
 	);
+
 	if (bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
 	}
-	
 	// If no solution found do nothing
 }
 
@@ -61,6 +59,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	Barrel->Elevate(DeltaRotator.Pitch);  
+	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
 }

@@ -2,14 +2,22 @@
 
 #pragma once
 
-#include "wrl\def.h"
-#include "CoreMinimal.h"
+ 
+ 
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
 // Forward Declaration
 class UTankBarrel; 
 class UTankTurret;
+
+UENUM()
+enum class EFiringState :uint8 {
+	Locked,
+	Aiming,
+	Reloading
+};
+
 
 //Hold  barrel's properties and Elevate
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -25,10 +33,14 @@ public:
 	void SetTurretReference(UTankTurret* TurretToSet);
 
 	void AimAt(FVector HitLocation, float LaunchSpeed);
+	
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
+
 
 	void MoveBarrelTowards(FVector AimDirection);
 
