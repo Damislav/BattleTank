@@ -11,17 +11,25 @@
  */
 class ATank;	
 
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
+
+
+protected:
+	// how clsoe can ai tank coem to player
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float AcceptanceRadius = 3000;
+ 
+
 
 private:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	// how clsoe can ai tank coem to player
-	float AcceptanceRadius = 3000;
+
+	
 	 
 };
