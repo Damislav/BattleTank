@@ -47,7 +47,7 @@ EFiringState UTankAimingComponent::GetFiringState() const
 	return  FiringState;
 }
 
-int UTankAimingComponent::GetRoundsLeft() const
+int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return RoundsLeft;
 }
@@ -112,10 +112,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirections)
 
 void UTankAimingComponent::Fire()
 {
-	if (RoundsLeft <=0) {
-		return;
-	}
-	else if (FiringState == EFiringState::Locked ||  FiringState==EFiringState::Aiming)
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
 		// Spawn a projectile at the socket location on the barrel
 		if (!ensure(Barrel)) { return; }
@@ -128,9 +125,8 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
-	 	RoundsLeft--;
+		RoundsLeft--;
 	}
-
 }
 
 

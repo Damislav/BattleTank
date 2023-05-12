@@ -25,6 +25,11 @@ protected:
 private:
 	virtual void BeginPlay() override;
 
+	void SetPawn(APawn* InPawn);
+
+
+	void OnPossedTankDeath();
+
 	virtual void Tick(float DeltaTime) override;
 
 	// Start the tank moving the barrel so that a shot would hit where
